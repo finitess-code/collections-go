@@ -1,0 +1,26 @@
+
+name: Main pipeline for Go library
+
+on:
+    push:
+        branches:
+            - "**"
+
+jobs:
+    check-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v3
+            - name: setup go
+              uses: actions/setup-go@v3
+              with:
+                go-version-file: "./go.mod"
+            - name: run go vet
+              run: go vet ./...
+            - name: run go sec
+              uses: securego/gosec@master
+            - name: run go tests
+              run: |
+                go clean -testcache
+                go test -v ./...
