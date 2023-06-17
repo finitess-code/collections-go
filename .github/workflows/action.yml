@@ -20,6 +20,8 @@ jobs:
               run: go vet ./...
             - name: run go sec
               uses: securego/gosec@master
+              with:
+                args: ./...
             - name: run go tests
               run: |
                 go clean -testcache
