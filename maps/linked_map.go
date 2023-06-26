@@ -4,15 +4,6 @@
 
 package maps
 
-type LinkedMap[K comparable, V any] interface {
-	Put(key K, value V)
-	Get(key K) (V, bool)
-	GetNillable(key K) *V
-	Keys() []K
-	Values() []V
-	Entries() []Entry[K, V]
-}
-
 type linkedMap[K comparable, V any] struct {
 	delegate map[K]V
 	keys     []K
@@ -22,6 +13,13 @@ func NewLinkedMap[K comparable, V any]() *linkedMap[K, V] {
 	return &linkedMap[K, V]{
 		delegate: make(map[K]V),
 		keys:     make([]K, 0),
+	}
+}
+
+func NewLinkedMapWithSize[K comparable, V any](size int) *linkedMap[K, V] {
+	return &linkedMap[K, V]{
+		delegate: make(map[K]V, size),
+		keys:     make([]K, 0, size),
 	}
 }
 
