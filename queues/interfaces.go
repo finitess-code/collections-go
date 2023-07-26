@@ -4,9 +4,9 @@
 
 package queues
 
-type Queue[K comparable] interface {
-	Push(K)
-	Pop() (K, error)
+type Queue[T any] interface {
+	Push(T)
+	Pop() (T, error)
 	Size() int
 	IsEmpty() bool
 }

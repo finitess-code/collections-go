@@ -6,21 +6,21 @@ package queues
 
 import "errors"
 
-type FIFOQueue[K comparable] struct {
-	delegate []K
+type FIFOQueue[T any] struct {
+	delegate []T
 }
 
-func NewFIFOQueue[K comparable]() *FIFOQueue[K] {
-	return &FIFOQueue[K]{}
+func NewFIFOQueue[T any]() *FIFOQueue[T] {
+	return &FIFOQueue[T]{}
 }
 
-func (q *FIFOQueue[K]) Push(elem K) {
+func (q *FIFOQueue[T]) Push(elem T) {
 	q.delegate = append(q.delegate, elem)
 }
 
-func (q *FIFOQueue[K]) Pop() (K, error) {
+func (q *FIFOQueue[T]) Pop() (T, error) {
 	if q.IsEmpty() {
-		return *new(K), errors.New("the queue is empty, nothing to pop")
+		return *new(T), errors.New("the queue is empty, nothing to pop")
 	}
 
 	res := q.delegate[0]
@@ -28,10 +28,10 @@ func (q *FIFOQueue[K]) Pop() (K, error) {
 	return res, nil
 }
 
-func (q *FIFOQueue[K]) Size() int {
+func (q *FIFOQueue[T]) Size() int {
 	return len(q.delegate)
 }
 
-func (q *FIFOQueue[K]) IsEmpty() bool {
+func (q *FIFOQueue[T]) IsEmpty() bool {
 	return q.Size() == 0
 }
